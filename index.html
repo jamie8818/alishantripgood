@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>嘉義・阿里山 7/6–7/9 家庭行程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* 山霧・檜木・茶園・晨曦 */
+    --ink:#1f3329;          /* 檜木林深綠 */
+    --forest:#2f5541;       /* 森林綠 */
+    --jade:#5b8f6f;         /* 茶園翠 */
+    --mist:#e8ede6;         /* 山霧灰綠 */
+    --paper:#f4f6f1;        /* 霧白紙 */
+    --card:#ffffff;
+    --dawn:#e0a244;         /* 晨曦金（保留給日出） */
+    --dawn-soft:#f6e3c0;
+    --line:#c9d6c9;
+    --text:#233029;
+    --muted:#6a7c6f;
+    --tbd:#c67b3a;
+    --serif:"Noto Serif TC",serif;
+    --sans:"Noto Sans TC",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    color:var(--text);
+    background:var(--paper);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    font-size:17px;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 18px 64px}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(120% 90% at 80% -10%, rgba(224,162,68,.28), transparent 55%),
+      linear-gradient(160deg,var(--ink) 0%, var(--forest) 100%);
+    color:#f2f6ef;
+    padding:52px 22px 46px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .hero::after{ /* 山稜線 */
+    content:"";position:absolute;left:0;right:0;bottom:-1px;height:52px;
+    background:var(--paper);
+    clip-path:polygon(0 100%,0 55%,14% 72%,28% 38%,42% 66%,56% 30%,70% 60%,84% 34%,100% 62%,100% 100%);
+  }
+  .hero .eyebrow{
+    font-family:var(--sans);font-weight:500;letter-spacing:.32em;
+    font-size:12.5px;color:var(--dawn-soft);margin-bottom:14px;
+  }
+  .hero h1{
+    font-family:var(--serif);font-weight:900;line-height:1.25;
+    font-size:34px;letter-spacing:.02em;
+  }
+  .hero .dates{
+    font-family:var(--serif);font-weight:500;font-size:19px;
+    margin-top:10px;color:#dfe9df;
+  }
+  .hero .who{
+    display:inline-block;margin-top:20px;padding:7px 16px;
+    background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);
+    border-radius:999px;font-size:14px;font-weight:500;letter-spacing:.02em;
+  }
+
+  /* ---------- Day nav ---------- */
+  .daynav{
+    position:sticky;top:0;z-index:20;
+    background:rgba(244,246,241,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:10px 0;margin-bottom:6px;
+  }
+  .daynav-inner{max-width:680px;margin:0 auto;display:flex;gap:8px;padding:0 14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .daynav-inner::-webkit-scrollbar{display:none}
+  .tab{
+    flex:0 0 auto;border:1px solid var(--line);background:var(--card);
+    color:var(--forest);border-radius:999px;padding:9px 15px;
+    font-family:var(--sans);font-weight:700;font-size:14.5px;cursor:pointer;
+    white-space:nowrap;transition:.18s;min-height:40px;
+  }
+  .tab small{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:1px;letter-spacing:.02em}
+  .tab.active{background:var(--forest);color:#fff;border-color:var(--forest)}
+  .tab.active small{color:var(--dawn-soft)}
+
+  /* ---------- Day section ---------- */
+  .day{padding-top:26px}
+  .day[hidden]{display:none}
+  .day-head{display:flex;align-items:baseline;gap:12px;margin:0 4px 20px}
+  .day-num{
+    font-family:var(--serif);font-weight:900;font-size:44px;color:var(--jade);
+    line-height:1;letter-spacing:-.02em;
+  }
+  .day-head .meta h2{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--ink)}
+  .day-head .meta .route{font-size:13.5px;color:var(--muted);margin-top:2px;letter-spacing:.02em}
+
+  /* ---------- Rail timeline ---------- */
+  .rail{position:relative;padding-left:34px}
+  .rail::before{ /* 鐵軌線 */
+    content:"";position:absolute;left:11px;top:8px;bottom:12px;width:3px;
+    background:repeating-linear-gradient(var(--line) 0 9px, transparent 9px 15px);
+  }
+  .stop{position:relative;margin-bottom:16px}
+  .stop::before{ /* 停靠站點 */
+    content:"";position:absolute;left:-29px;top:20px;width:15px;height:15px;
+    border-radius:50%;background:var(--card);border:3px solid var(--jade);
+    box-shadow:0 0 0 3px var(--paper);
+  }
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:15px 16px;box-shadow:0 1px 2px rgba(31,51,41,.04);
+  }
+  .card .top{display:flex;align-items:flex-start;gap:11px}
+  .emoji{font-size:24px;line-height:1.4;flex:0 0 auto}
+  .card .grow{flex:1;min-width:0}
+  .time{
+    font-family:var(--serif);font-weight:700;font-size:15px;color:var(--forest);
+    letter-spacing:.02em;
+  }
+  .title{font-weight:700;font-size:17.5px;color:var(--ink);margin-top:1px;line-height:1.35}
+  .loc{font-size:13.5px;color:var(--muted);margin-top:3px}
+  .loc::before{content:"📍 ";font-size:12px}
+  .note{font-size:14.5px;color:var(--text);margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);line-height:1.65}
+  .note ul{margin:4px 0 0;padding-left:18px}
+  .note li{margin-bottom:2px}
+  .maplink{
+    display:inline-flex;align-items:center;gap:5px;margin-top:11px;
+    background:var(--mist);color:var(--forest);text-decoration:none;
+    font-weight:700;font-size:13.5px;padding:8px 14px;border-radius:999px;
+    min-height:38px;transition:.16s;
+  }
+  .maplink:hover,.maplink:focus{background:var(--jade);color:#fff}
+  .maplink:focus-visible{outline:2px solid var(--dawn);outline-offset:2px}
+
+  /* 住宿標記 */
+  .stay .card{background:linear-gradient(180deg,#f7faf5,#eef4ea);border-color:#cddccb}
+  .stay::before{border-color:var(--forest);background:var(--forest)}
+  /* 待確認 */
+  .tbd .time::after{content:"待確認";margin-left:8px;font-family:var(--sans);font-weight:700;font-size:11px;color:#fff;background:var(--tbd);padding:2px 8px;border-radius:999px;vertical-align:middle}
+  /* 日出高光 */
+  .sunrise::before{border-color:var(--dawn);background:var(--dawn);box-shadow:0 0 0 3px var(--paper),0 0 14px 2px rgba(224,162,68,.55)}
+  .sunrise .card{background:linear-gradient(180deg,#fff8ec,#fdeed2);border-color:var(--dawn-soft)}
+  .sunrise .time,.sunrise .title{color:#a9691a}
+
+  /* ---------- 行前提醒 ---------- */
+  .tips{margin-top:40px;background:var(--ink);color:#eef4ea;border-radius:20px;padding:26px 22px}
+  .tips h3{font-family:var(--serif);font-weight:700;font-size:20px;color:#fff;margin-bottom:4px}
+  .tips .sub{font-size:13px;color:var(--dawn-soft);letter-spacing:.04em;margin-bottom:16px}
+  .tips .grid{display:grid;gap:13px}
+  .tip{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.6}
+  .tip .i{font-size:21px;flex:0 0 auto;line-height:1.3}
+  .tip b{color:#fff}
+  .tip span{color:#cddccb}
+
+  footer{text-align:center;margin-top:34px;color:var(--muted);font-size:12.5px;letter-spacing:.04em}
+  footer .line{width:40px;height:2px;background:var(--line);margin:0 auto 14px;border-radius:2px}
+
+  @media (max-width:420px){
+    .hero h1{font-size:29px}
+    body{font-size:16px}
+    .day-num{font-size:38px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">FAMILY TRIP · CHIAYI × ALISHAN</div>
+  <h1>嘉義・阿里山<br>家庭四日遊</h1>
+  <div class="dates">2026 / 7 / 6（一）– 7 / 9（四）</div>
+  <div class="who">👨‍👩‍👧‍👦 全團 14 人・含 4 位 3 歲以下幼兒</div>
+</header>
+
+<nav class="daynav" aria-label="選擇天數">
+  <div class="daynav-inner" id="tabs">
+    <button class="tab active" data-day="1">Day 1<small>7/6 一</small></button>
+    <button class="tab" data-day="2">Day 2<small>7/7 二</small></button>
+    <button class="tab" data-day="3">Day 3<small>7/8 三</small></button>
+    <button class="tab" data-day="4">Day 4<small>7/9 四</small></button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ============ DAY 1 ============ -->
+  <section class="day" data-day="1">
+    <div class="day-head">
+      <div class="day-num">1</div>
+      <div class="meta"><h2>7/6（一）出發日</h2><div class="route">台北 → 台中 → 新港 → 嘉義</div></div>
+    </div>
+    <div class="rail">
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🚐</div><div class="grow">
+        <div class="time">09:00</div><div class="title">台北出發前往台中</div>
+        <div class="note">車程約 1.75–2 小時，國道 1 號中途（西湖／泰安休息站）可停車休息、上洗手間。</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🥢</div><div class="grow">
+        <div class="time">11:30</div><div class="title">午餐・全鴨坊 市政總店</div>
+        <div class="loc">台中西屯</div>
+        <div class="note">已訂位、無低消，備有兒童座椅。烤鴨為主餐。</div>
+        <a class="maplink" href="https://maps.app.goo.gl/rkdzvoUbpDgTrhfN6" target="_blank" rel="noopener">🗺️ 地圖導航</a>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🚐</div><div class="grow">
+        <div class="time">13:00</div><div class="title">出發前往板陶窯</div>
+        <div class="note">台中 → 新港，車程約 1.25–1.5 小時。</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🛖</div><div class="grow">
+        <div class="time">14:30</div><div class="title">板陶窯交趾剪黏工藝園區（新港）</div>
+        <div class="loc">嘉義／新港・營業至 17:30</div>
+        <div class="note">門票 100 元可全額折抵餐飲或工藝品。園區內有交趾陶彩繪、馬賽克 DIY，還有巨型陶偶可拍照，適合大小朋友。</div>
+        <a class="maplink" href="https://maps.app.goo.gl/oRqB87yqDtzrGgWPA" target="_blank" rel="noopener">🗺️ 地圖導航</a>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🌮</div><div class="grow">
+        <div class="time">17:00</div><div class="title">嘉義在地小吃（外帶回民宿享用）</div>
+        <div class="loc">嘉義市區</div>
+        <a class="maplink" href="https://maps.app.goo.gl/WUXCdrLvLVX2bynJ8" target="_blank" rel="noopener">🗺️ 推薦美食清單</a>
+      </div></div></div></div>
+
+      <div class="stop stay"><div class="card"><div class="top"><div class="emoji">🏡</div><div class="grow">
+        <div class="time">今晚住宿</div><div class="title">里白民宿 Check-in</div>
+        <div class="note">入住時間 15:00 起，抵達後先放行李、休息。</div>
+        <a class="maplink" href="https://maps.app.goo.gl/Gcrd6MK33cxjcQtNA" target="_blank" rel="noopener">🗺️ 地圖導航</a>
+      </div></div></div></div>
+
+    </div>
+  </section>
+
+  <!-- ============ DAY 2 ============ -->
+  <section class="day" data-day="2" hidden>
+    <div class="day-head">
+      <div class="day-num">2</div>
+      <div class="meta"><h2>7/7（二）茶園與部落</h2><div class="route">嘉義 → 生力農場 → 特富野</div></div>
+    </div>
+    <div class="rail">
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🚗</div><div class="grow">
+        <div class="time">08:30</div><div class="title">出發前往阿里山</div>
+        <div class="note">車程約 45 分鐘。</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🍵</div><div class="grow">
+        <div class="time">09:30</div><div class="title">生力農場・製茶體驗</div>
+        <div class="loc">生力農場</div>
+        <div class="note">親手體驗高山茶製作過程。</div>
+        <a class="maplink" href="https://maps.app.goo.gl/LyBjQBSUMJMRuNox5" target="_blank" rel="noopener">🗺️ 地圖導航</a>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🥢</div><div class="grow">
+        <div class="time">12:00</div><div class="title">午餐・生力農場茶餐</div>
+        <div class="loc">生力農場</div>
+      </div></div></div></div>
+
+      <div class="stop stay"><div class="card"><div class="top"><div class="emoji">🛖</div><div class="grow">
+        <div class="time">15:00–15:30</div><div class="title">特富野民宿・入住</div>
+        <div class="loc">特富野・原民體驗民宿</div>
+        <div class="note">辦理入住、認識環境。</div>
+        <a class="maplink" href="https://maps.app.goo.gl/husAF25h9KrAjFNm6" target="_blank" rel="noopener">🗺️ 地圖導航</a>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🎋</div><div class="grow">
+        <div class="time">15:30–17:00</div><div class="title">竹弓製作＋射箭體驗</div>
+        <div class="note">鄒族傳統文化體驗，大人小孩都能玩。</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🥣</div><div class="grow">
+        <div class="time">17:00–18:00</div><div class="title">愛玉導覽＋DIY</div>
+        <div class="note">認識野生愛玉，親手搓洗做成愛玉凍。</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🍲</div><div class="grow">
+        <div class="time">18:00–20:00</div><div class="title">原民風味晚餐</div>
+        <div class="loc">特富野民宿</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🔥</div><div class="grow">
+        <div class="time">20:00</div><div class="title">晚安・特富野</div>
+        <div class="note">夜間活動後於部落休息，今晚宿特富野民宿。</div>
+      </div></div></div></div>
+
+    </div>
+  </section>
+
+  <!-- ============ DAY 3 ============ -->
+  <section class="day" data-day="3" hidden>
+    <div class="day-head">
+      <div class="day-num">3</div>
+      <div class="meta"><h2>7/8（三）神木與小火車</h2><div class="route">特富野步道 → 阿里山森林遊樂區</div></div>
+    </div>
+    <div class="rail">
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🥐</div><div class="grow">
+        <div class="time">07:30–09:00</div><div class="title">民宿早餐</div>
+        <div class="note">可睡到自然醒，不用趕。</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🥾</div><div class="grow">
+        <div class="time">09:30–11:30</div><div class="title">NoYoCa 巨木群</div>
+        <div class="loc">特富野步道</div>
+        <div class="note">森林步道散步賞巨木，全程約 2 小時。</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🍗</div><div class="grow">
+        <div class="time">11:30–13:00</div><div class="title">回民宿享用午餐</div>
+        <div class="loc">特富野民宿</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🚌</div><div class="grow">
+        <div class="time">13:00</div><div class="title">前往阿里山森林遊樂區</div>
+        <div class="note">車程約 40 分鐘。</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🎫</div><div class="grow">
+        <div class="time">13:40</div><div class="title">抵達園區・購票與接駁</div>
+        <div class="note">於園區購買門票，車輛停在阿里山車站旁停車場。快抵達時致電文山賓館，可安排從車站接駁上山。</div>
+      </div></div></div></div>
+
+      <div class="stop stay"><div class="card"><div class="top"><div class="emoji">🏨</div><div class="grow">
+        <div class="time">14:20</div><div class="title">文山賓館 Check-in</div>
+        <div class="loc">阿里山森林遊樂區內</div>
+        <div class="note">入住後可先休息。</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🚂</div><div class="grow">
+        <div class="time">15:00–16:30</div><div class="title">沼平線・搭小火車＋散步</div>
+        <div class="loc">阿里山車站 ↔ 沼平站</div>
+        <div class="note">
+          <ul>
+            <li>15:10 搭沼平線上行（車程約 6 分）→ 沼平站</li>
+            <li>沼平站下車，平路慢逛 40–60 分：櫻之道、姊妹潭、沼平公園</li>
+            <li>16:00 搭末班車回程 → 阿里山車站</li>
+          </ul>
+          若沒趕上末班車，沼平走回車站約 15–20 分（緩坡）。
+        </div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🍽️</div><div class="grow">
+        <div class="time">17:30</div><div class="title">晚餐・山賓餐廳</div>
+        <div class="loc">阿里山森林遊樂區內</div>
+        <div class="note">坐一桌，戚先生訂位。今晚宿文山賓館。</div>
+        <a class="maplink" href="https://maps.app.goo.gl/bch6bdTkEaDDUuHw6" target="_blank" rel="noopener">🗺️ 地圖導航</a>
+      </div></div></div></div>
+
+    </div>
+  </section>
+
+  <!-- ============ DAY 4 ============ -->
+  <section class="day" data-day="4" hidden>
+    <div class="day-head">
+      <div class="day-num">4</div>
+      <div class="meta"><h2>7/9（四）日出與歸途</h2><div class="route">祝山日出 → 下山 → 回台北</div></div>
+    </div>
+    <div class="rail">
+
+      <div class="stop sunrise"><div class="card"><div class="top"><div class="emoji">🌅</div><div class="grow">
+        <div class="time">04:30</div><div class="title">祝山線・觀日出（可選）</div>
+        <div class="loc">祝山線</div>
+        <div class="note">阿里山經典日出行程。實際發車與起床時間，依前一日 16:30 官方公告為準，請留意領隊通知，前一晚早點休息。</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">☕</div><div class="grow">
+        <div class="time">07:00–09:00</div><div class="title">文山賓館早餐</div>
+        <div class="note">於「新星光」或「海山園」餐廳用餐。</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🌲</div><div class="grow">
+        <div class="time">08:00</div><div class="title">晨間森林浴（香林神木＋巨木群棧道）</div>
+        <div class="loc">阿里山森林遊樂區</div>
+        <div class="note">約 2–2.5 公里緩坡棧道，走走停停約 1.5 小時。沿森之道 → 樹靈塔 → 香林神木（約 2300 年紅檜）→ 巨木群棧道 → 慈雲寺一帶折返。</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🧳</div><div class="grow">
+        <div class="time">09:45–10:30</div><div class="title">收行李＋Check-out 下山</div>
+        <div class="note">09:45 折返收行李，10:30 退房下山，車程約 40 分鐘。</div>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🥢</div><div class="grow">
+        <div class="time">11:20</div><div class="title">午餐・達官現炒</div>
+        <div class="note">已訂位。</div>
+        <a class="maplink" href="https://maps.app.goo.gl/HgnPhhwhfdPBzD4i8" target="_blank" rel="noopener">🗺️ 地圖導航</a>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">☕</div><div class="grow">
+        <div class="time">12:40</div><div class="title">璟隆咖啡</div>
+        <div class="note">下山後歇腳喝咖啡。</div>
+        <a class="maplink" href="https://maps.app.goo.gl/Kp1SG5Jce5Vre1Rb6" target="_blank" rel="noopener">🗺️ 地圖導航</a>
+      </div></div></div></div>
+
+      <div class="stop"><div class="card"><div class="top"><div class="emoji">🏁</div><div class="grow">
+        <div class="time">15:00</div><div class="title">啟程回台北</div>
+        <div class="note">中途停靠台中清水休息站、新竹關西休息站。</div>
+      </div></div></div></div>
+
+    </div>
+  </section>
+
+  <!-- ============ 行前提醒 ============ -->
+  <section class="tips">
+    <h3>出發前小提醒</h3>
+    <div class="sub">給全團夥伴 · 請大家看一下</div>
+    <div class="grid">
+      <div class="tip"><div class="i">🧥</div><div><b>務必帶保暖外套。</b><span> 阿里山早晚涼，清晨看日出約 10°C 上下，長輩與小朋友請多帶一件。</span></div></div>
+      <div class="tip"><div class="i">👟</div><div><b>穿好走的鞋。</b><span> 多為木棧道與緩坡，好走的布鞋／運動鞋最合適。</span></div></div>
+      <div class="tip"><div class="i">🌅</div><div><b>日出當天很早起。</b><span> 發車時間前一晚才公告，請留意領隊通知，前一晚早點睡。</span></div></div>
+      <div class="tip"><div class="i">👶</div><div><b>幼兒用品自備。</b><span> 推車／背巾請自行攜帶；遊覽巴士上如有需要請自備安全座椅。餐廳已備兒童座椅。</span></div></div>
+      <div class="tip"><div class="i">☔</div><div><b>帶輕便雨具。</b><span> 山區天氣多變，備一件輕便雨衣或折傘。</span></div></div>
+      <div class="tip"><div class="i">💊</div><div><b>個人藥品隨身。</b><span> 常備藥、健保卡記得帶著。</span></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="line"></div>
+    嘉義・阿里山家庭四日遊 · 2026/7/6–7/9<br>祝大家玩得開心、平安順遊 🌿
+  </footer>
+
+</main>
+
+<script>
+  (function(){
+    var tabs = document.querySelectorAll('.tab');
+    var days = document.querySelectorAll('.day');
+    function show(d){
+      days.forEach(function(s){ s.hidden = (s.getAttribute('data-day') !== d); });
+      tabs.forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-day') === d); });
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+    tabs.forEach(function(t){
+      t.addEventListener('click', function(){ show(t.getAttribute('data-day')); });
+    });
+  })();
+</script>
+</body>
+</html>
